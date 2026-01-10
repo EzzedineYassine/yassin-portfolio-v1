@@ -16,12 +16,12 @@ const ProfileAvatar = ({ src, alt }: ProfileAvatarProps) => {
       {/* Glow ring */}
       <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl scale-110" />
       
-      {/* Avatar container */}
-      <div className="relative w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden ring-2 ring-primary/30 shadow-2xl">
+      {/* Avatar container with premium shadow */}
+      <div className="relative w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden ring-2 ring-primary/30 shadow-[0_8px_32px_rgba(59,130,246,0.25)]">
         <img
           src={src}
           alt={alt}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-[center_15%] scale-110"
         />
       </div>
     </motion.div>
