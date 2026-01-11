@@ -1,5 +1,8 @@
+import { useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { FileText, Mail } from "lucide-react";
+import Header from "@/components/Header";
+import Section from "@/components/Section";
 import ProfileAvatar from "@/components/ProfileAvatar";
 import ActionButton from "@/components/ActionButton";
 import SocialLink from "@/components/SocialLink";
@@ -7,6 +10,20 @@ import { LinkedInIcon, GitHubIcon, InstagramIcon, FacebookIcon } from "@/compone
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Index = () => {
+  const aboutRef = useRef<HTMLElement>(null);
+  const meRef = useRef<HTMLElement>(null);
+  const connectRef = useRef<HTMLElement>(null);
+
+  const handleNavigate = useCallback((section: string) => {
+    const refs: Record<string, React.RefObject<HTMLElement>> = {
+      about: aboutRef,
+      me: meRef,
+      connect: connectRef,
+    };
+    
+    refs[section]?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
   const socialLinks = [
     {
       href: "https://www.linkedin.com/in/yassin-ezzedine-118699387/",
@@ -31,103 +48,86 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col items-center px-4 py-12 md:py-16">
-      <motion.main
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className="w-full max-w-md mx-auto flex flex-col items-center pt-8 md:pt-12"
-      >
-        {/* Profile Section */}
-        <section className="flex flex-col items-center text-center mb-8">
-          <ProfileAvatar src={profilePhoto} alt="Yassin Ezzedine" />
-          
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-6 text-2xl md:text-3xl font-semibold text-foreground"
-          >
-            Yassin Ezzedine
-          </motion.h1>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-2 text-sm md:text-base text-muted-foreground"
-          >
-            Business Intelligence Student · Cybersecurity Enthusiast
-          </motion.p>
-        </section>
-
-        {/* Primary Actions */}
-        <motion.section
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="w-full flex flex-col gap-3 mb-6"
-        >
-          <ActionButton
-            href="/resume.pdf"
-            icon={FileText}
-            variant="primary"
-            download
-          >
-            Download CV
-          </ActionButton>
-          
-          <ActionButton
-            href="mailto:yassineezzediney2g@gmail.com"
-            icon={Mail}
-            variant="secondary"
-          >
-            Email Me
-          </ActionButton>
-        </motion.section>
-
-        {/* About Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="w-full mb-8"
-        >
-          <div className="p-5 rounded-2xl bg-card/50 border border-border">
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-              About Me
-            </h2>
-            <p className="text-sm leading-relaxed text-text-soft">
+    <div className="min-h-screen flex flex-col">
+      <Header onNavigate={handleNavigate} />
+      
+      <main className="flex-1 pt-20">
+        {/* About Me Section */}
+        <Section ref={aboutRef} id="about" title="About Me">
+          <div className="p-6 rounded-2xl bg-card/50 border border-border">
+            <p className="text-sm md:text-base leading-relaxed text-muted-foreground">
               I'm a Business Intelligence student with a strong interest in cybersecurity and modern technologies. I enjoy understanding how systems work, identifying weaknesses, and learning how to secure digital environments. I'm driven by curiosity, hands-on learning, and continuous self-improvement. Outside of tech, I value discipline, physical training, and a simple lifestyle focused on long-term growth.
             </p>
           </div>
-        </motion.section>
+        </Section>
 
-        {/* Social Links */}
-        <section className="w-full flex flex-col gap-3 mb-10">
-          {socialLinks.map((link, index) => (
-            <SocialLink
-              key={link.label}
-              href={link.href}
-              icon={link.icon}
-              label={link.label}
-              delay={0.6 + index * 0.1}
-            />
-          ))}
-        </section>
+        {/* Me Section */}
+        <Section ref={meRef} id="me" title="Me">
+          <div className="flex flex-col items-center gap-6">
+            <ProfileAvatar src={profilePhoto} alt="Yassin Ezzedine" />
+            
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-center"
+            >
+              <h3 className="text-xl font-semibold text-foreground">Yassin Ezzedine</h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Business Intelligence Student · Cybersecurity Enthusiast
+              </p>
+            </motion.div>
+
+            <div className="w-full flex flex-col gap-3 max-w-sm">
+              <ActionButton
+                href="mailto:yassineezzediney2g@gmail.com"
+                icon={Mail}
+                variant="secondary"
+              >
+                Email Me
+              </ActionButton>
+              
+              <ActionButton
+                href="/resume.pdf"
+                icon={FileText}
+                variant="primary"
+                download
+              >
+                Download CV
+              </ActionButton>
+            </div>
+          </div>
+        </Section>
+
+        {/* Connect with Me Section */}
+        <Section ref={connectRef} id="connect" title="Connect with Me">
+          <div className="flex flex-col gap-3 max-w-sm mx-auto">
+            {socialLinks.map((link, index) => (
+              <SocialLink
+                key={link.label}
+                href={link.href}
+                icon={link.icon}
+                label={link.label}
+                delay={0.1 + index * 0.1}
+              />
+            ))}
+          </div>
+        </Section>
 
         {/* Footer */}
         <motion.footer
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1 }}
-          className="text-center"
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center py-8"
         >
           <p className="text-xs text-muted-foreground">
             © Yassin Ezzedine
           </p>
         </motion.footer>
-      </motion.main>
+      </main>
     </div>
   );
 };
