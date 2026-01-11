@@ -89,10 +89,10 @@ const Index = () => {
               </ActionButton>
               
               <ActionButton
-                href="/resume.pdf"
+                href={`${window.location.origin}/resume.pdf`}
                 icon={FileText}
                 variant="primary"
-                download
+                download="Yassin_Ezzedine_CV.pdf"
               >
                 Download CV
               </ActionButton>

@@ -6,7 +6,7 @@ interface ActionButtonProps {
   icon: LucideIcon;
   children: React.ReactNode;
   variant?: "primary" | "secondary";
-  download?: boolean;
+  download?: boolean | string;
 }
 
 const ActionButton = ({ href, icon: Icon, children, variant = "primary", download }: ActionButtonProps) => {
