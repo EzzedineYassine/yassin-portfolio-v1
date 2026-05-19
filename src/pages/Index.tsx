@@ -56,7 +56,7 @@ const Index = () => {
         <Section ref={aboutRef} id="about" title="About Me">
           <div className="p-6 rounded-2xl bg-card/50 border border-border">
             <p className="text-sm md:text-base leading-relaxed text-muted-foreground">
-              I'm a Business Intelligence student with a strong interest in cybersecurity and modern technologies. I enjoy understanding how systems work, identifying weaknesses, and learning how to secure digital environments. I'm driven by curiosity, hands-on learning, and continuous self-improvement. Outside of tech, I value discipline, physical training, and a simple lifestyle focused on long-term growth.
+              I'm a Business Information Systems student (FSEG Nabeul) passionate about full-stack web development and cybersecurity. I'm driven by curiosity and hands-on learning, actively building projects like e-commerce platforms and recommendation systems. Currently, I'm looking for a two-month internship to apply my technical skills in web and systems development within a dynamic team.
             </p>
           </div>
         </Section>
@@ -75,7 +75,7 @@ const Index = () => {
             >
               <h3 className="text-xl font-semibold text-foreground">Yassin Ezzedine</h3>
               <p className="text-sm text-muted-foreground mt-1">
-                Business Intelligence Student · Cybersecurity Enthusiast
+                Business Information Systems Student · Full-Stack Developer
               </p>
             </motion.div>
 
