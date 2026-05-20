@@ -134,8 +134,6 @@ const Index = () => {
                 <span className="font-mono text-primary font-bold">{progress.toFixed(8)}%</span>
               </div>
               <div className="w-full h-3 bg-muted rounded-full overflow-hidden border border-border/30 relative">
-                {/* Marker for end of Year 2 (2/3 of the way) */}
-                <div className="absolute top-0 bottom-0 left-[66.66%] w-0.5 bg-border/80 z-10" title="Year 2 Completed" />
                 <motion.div
                   className="h-full bg-gradient-to-r from-primary/80 to-primary rounded-full relative"
                   style={{ width: `${progress}%` }}
@@ -146,13 +144,12 @@ const Index = () => {
               </div>
               <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
                 <span>Start (Sept 2024)</span>
-                <span className="font-medium text-foreground bg-primary/5 px-1.5 py-0.5 rounded">Completed Year 2 (June 2026) 🎉</span>
                 <span>Graduation (June 2027)</span>
               </div>
             </div>
             
             <p className="text-xs text-muted-foreground mt-2 border-t border-border/40 pt-3">
-              Having just completed my second year, I am heading into the third and final year of my Licence. The progress bar actively counts up in real-time.
+              I am currently pursuing my Licence in Informatique de Gestion. The progress bar actively counts up in real-time.
             </p>
           </div>
         </Section>
