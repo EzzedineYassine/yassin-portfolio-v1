@@ -1,6 +1,6 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FileText, Mail } from "lucide-react";
+import { FileText, Mail, GraduationCap, ShoppingBag, Brain, Database } from "lucide-react";
 import Header from "@/components/Header";
 import Section from "@/components/Section";
 import ProfileAvatar from "@/components/ProfileAvatar";
@@ -11,18 +11,65 @@ import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Index = () => {
   const aboutRef = useRef<HTMLElement>(null);
+  const educationRef = useRef<HTMLElement>(null);
+  const projectsRef = useRef<HTMLElement>(null);
   const meRef = useRef<HTMLElement>(null);
   const connectRef = useRef<HTMLElement>(null);
 
   const handleNavigate = useCallback((section: string) => {
     const refs: Record<string, React.RefObject<HTMLElement>> = {
       about: aboutRef,
+      education: educationRef,
+      projects: projectsRef,
       me: meRef,
       connect: connectRef,
     };
     
     refs[section]?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
+
+  // Education progress calculation (Licence: Sept 15, 2024 to June 15, 2027)
+  const [progress, setProgress] = useState(0);
+  
+  useEffect(() => {
+    const start = new Date("2024-09-15T00:00:00").getTime();
+    const end = new Date("2027-06-15T00:00:00").getTime();
+    const total = end - start;
+
+    const updateProgress = () => {
+      const now = Date.now();
+      const pct = Math.min(Math.max(((now - start) / total) * 100, 0), 100);
+      setProgress(pct);
+    };
+
+    updateProgress();
+    const interval = setInterval(updateProgress, 100); // update every 100ms for high precision decimals
+    return () => clearInterval(interval);
+  }, []);
+
+  const projects = [
+    {
+      title: "Full-Stack E-Commerce Platform (Phantom Stickers)",
+      year: "2024",
+      description: "Designed a comprehensive e-commerce website using React and Vite. Implemented a centralized state architecture (Context API), a secure admin dashboard with CRUD functionalities, and persistent storage via Supabase and localStorage. Deployed continuously on Vercel.",
+      tags: ["React", "Vite", "Context API", "Supabase", "Tailwind CSS", "Vercel"],
+      icon: ShoppingBag,
+    },
+    {
+      title: "Movie Recommendation System",
+      year: "2024",
+      description: "Developed a collaborative filtering machine learning algorithm in Python. Managed and analyzed complex datasets utilizing Pandas and Scikit-Learn libraries to generate personalized recommendations.",
+      tags: ["Python", "Machine Learning", "Pandas", "Scikit-Learn", "Collaborative Filtering"],
+      icon: Brain,
+    },
+    {
+      title: "Information System Design",
+      year: "2024",
+      description: "Mapped system architectures and structured database schemas using UML diagrams. Wrote optimized queries and stored procedures with SQL and PL/SQL for high-performance databases.",
+      tags: ["UML", "SQL", "PL/SQL", "Database Design", "Optimization"],
+      icon: Database,
+    },
+  ];
 
   const socialLinks = [
     {
@@ -58,6 +105,95 @@ const Index = () => {
             <p className="text-sm md:text-base leading-relaxed text-muted-foreground">
               I'm a Business Information Systems student (FSEG Nabeul) passionate about full-stack web development and cybersecurity. I'm driven by curiosity and hands-on learning, actively building projects like e-commerce platforms and recommendation systems. Currently, I'm looking for a two-month internship to apply my technical skills in web and systems development within a dynamic team.
             </p>
+          </div>
+        </Section>
+
+        {/* Education Section */}
+        <Section ref={educationRef} id="education" title="Education">
+          <div className="p-6 rounded-2xl bg-card/50 border border-border flex flex-col gap-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+              <div>
+                <h4 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                  <GraduationCap className="h-5 w-5 text-primary" />
+                  Licence en Informatique de Gestion
+                </h4>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Faculté des Sciences Économiques et de Gestion de Nabeul (FSEG)
+                </p>
+              </div>
+              <div className="text-right">
+                <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+                  2024 - 2027
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-2">
+              <div className="flex justify-between items-center text-xs md:text-sm">
+                <span className="text-muted-foreground font-medium">Degree Completion Progress</span>
+                <span className="font-mono text-primary font-bold">{progress.toFixed(8)}%</span>
+              </div>
+              <div className="w-full h-3 bg-muted rounded-full overflow-hidden border border-border/30 relative">
+                {/* Marker for end of Year 2 (2/3 of the way) */}
+                <div className="absolute top-0 bottom-0 left-[66.66%] w-0.5 bg-border/80 z-10" title="Year 2 Completed" />
+                <motion.div
+                  className="h-full bg-gradient-to-r from-primary/80 to-primary rounded-full relative"
+                  style={{ width: `${progress}%` }}
+                  initial={{ width: "0%" }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ type: "spring", stiffness: 55 }}
+                />
+              </div>
+              <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
+                <span>Start (Sept 2024)</span>
+                <span className="font-medium text-foreground bg-primary/5 px-1.5 py-0.5 rounded">Completed Year 2 (June 2026) 🎉</span>
+                <span>Graduation (June 2027)</span>
+              </div>
+            </div>
+            
+            <p className="text-xs text-muted-foreground mt-2 border-t border-border/40 pt-3">
+              Having just completed my second year, I am heading into the third and final year of my Licence. The progress bar actively counts up in real-time.
+            </p>
+          </div>
+        </Section>
+
+        {/* Projects Section */}
+        <Section ref={projectsRef} id="projects" title="Projects">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {projects.map((project, idx) => (
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="p-6 rounded-2xl bg-card/40 backdrop-blur-sm border border-border/60 hover:border-primary/40 hover:bg-card/60 transition-all duration-300 flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="text-xs text-primary font-mono bg-primary/10 px-2.5 py-0.5 rounded-full font-medium">
+                      {project.year}
+                    </span>
+                    <project.icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+                  </div>
+                  <h4 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                    {project.title}
+                  </h4>
+                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
+                    {project.description}
+                  </p>
+                </div>
+                <div className="mt-6">
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {project.tags.map(tag => (
+                      <span key={tag} className="text-[10px] bg-muted text-muted-foreground px-2 py-0.5 rounded-md font-mono">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </Section>
 

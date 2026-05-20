@@ -33,6 +33,8 @@ const Header = ({ onNavigate }: HeaderProps) => {
   
   const navLinks = [
     { label: "About Me", section: "about", keywords: ["about", "aboutme", "bio", "introduction"] },
+    { label: "Education", section: "education", keywords: ["education", "studies", "uni", "school", "progress", "fseg"] },
+    { label: "Projects", section: "projects", keywords: ["projects", "skills", "e-commerce", "react", "python", "work", "portfolio"] },
     { label: "Me", section: "me", keywords: ["me", "profile", "photo", "cv", "resume", "email"] },
     { label: "Connect with Me", section: "connect", keywords: ["connect", "connectwithme", "social", "linkedin", "github", "contact"] },
   ];
