@@ -2,6 +2,7 @@ import { useRef, useCallback, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FileText, Mail, GraduationCap, ShoppingBag, Brain, Database, ExternalLink } from "lucide-react";
 import Header from "@/components/Header";
+import { useLanguage } from "@/context/LanguageContext";
 import Section from "@/components/Section";
 import ProfileAvatar from "@/components/ProfileAvatar";
 import ActionButton from "@/components/ActionButton";
@@ -10,6 +11,7 @@ import { LinkedInIcon, GitHubIcon, InstagramIcon, FacebookIcon } from "@/compone
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Index = () => {
+  const { t } = useLanguage();
   const aboutRef = useRef<HTMLElement>(null);
   const educationRef = useRef<HTMLElement>(null);
   const projectsRef = useRef<HTMLElement>(null);
@@ -49,27 +51,29 @@ const Index = () => {
 
   const projects = [
     {
-      title: "Full-Stack E-Commerce Platform (Phantom Stickers)",
+      title: t("project_ecommerce_title"),
       year: "2024",
-      description: "Designed a comprehensive e-commerce website using React and Vite. Implemented a centralized state architecture (Context API), a secure admin dashboard with CRUD functionalities, and persistent storage via Supabase and localStorage. Deployed continuously on Vercel.",
+      description: t("project_ecommerce_desc"),
       tags: ["React", "Vite", "Context API", "Supabase", "Tailwind CSS", "Vercel"],
       icon: ShoppingBag,
-      link: "https://phantom-stickers.vercel.app", // Replace with actual link
-      linkLabel: "Visit Website",
+      link: "https://phantom-stickers.vercel.app",
+      linkLabel: t("btn_visit"),
     },
     {
-      title: "Movie Recommendation System",
+      title: t("project_movie_title"),
       year: "2024",
-      description: "Developed a collaborative filtering machine learning algorithm in Python. Managed and analyzed complex datasets utilizing Pandas and Scikit-Learn libraries to generate personalized recommendations.",
+      description: t("project_movie_desc"),
       tags: ["Python", "Machine Learning", "Pandas", "Scikit-Learn", "Collaborative Filtering"],
       icon: Brain,
+      linkLabel: t("btn_view"),
     },
     {
-      title: "Information System Design",
+      title: t("project_is_title"),
       year: "2024",
-      description: "Mapped system architectures and structured database schemas using UML diagrams. Wrote optimized queries and stored procedures with SQL and PL/SQL for high-performance databases.",
+      description: t("project_is_desc"),
       tags: ["UML", "SQL", "PL/SQL", "Database Design", "Optimization"],
       icon: Database,
+      linkLabel: t("btn_view"),
     },
   ];
 
@@ -102,25 +106,25 @@ const Index = () => {
       
       <main className="flex-1 pt-20">
         {/* About Me Section */}
-        <Section ref={aboutRef} id="about" title="About Me">
+        <Section ref={aboutRef} id="about" title={t("about_title")}>
           <div className="p-6 rounded-2xl bg-card/50 border border-border">
             <p className="text-sm md:text-base leading-relaxed text-muted-foreground">
-              I'm a Business Information Systems student (FSEG Nabeul) passionate about full-stack web development and cybersecurity. I'm driven by curiosity and hands-on learning, actively building projects like e-commerce platforms and recommendation systems. Currently, I'm looking for a two-month internship to apply my technical skills in web and systems development within a dynamic team.
+              {t("about_text")}
             </p>
           </div>
         </Section>
 
         {/* Education Section */}
-        <Section ref={educationRef} id="education" title="Education">
+        <Section ref={educationRef} id="education" title={t("edu_title")}>
           <div className="p-6 rounded-2xl bg-card/50 border border-border flex flex-col gap-4">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
               <div>
                 <h4 className="text-lg font-semibold text-foreground flex items-center gap-2">
                   <GraduationCap className="h-5 w-5 text-primary" />
-                  Licence en Informatique de Gestion
+                  {t("edu_degree")}
                 </h4>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Faculté des Sciences Économiques et de Gestion de Nabeul (FSEG)
+                  {t("edu_school")}
                 </p>
               </div>
               <div className="text-right">
@@ -132,10 +136,10 @@ const Index = () => {
 
             <div className="mt-4 space-y-2">
               <div className="flex justify-between items-center text-xs md:text-sm">
-                <span className="text-muted-foreground font-medium">Degree Completion Progress</span>
-                <span className="font-mono text-primary font-bold">{progress.toFixed(8)}%</span>
+                <span className="text-muted-foreground font-medium">{t("edu_progress_label")}</span>
+                <span className="font-mono text-primary font-bold dir-ltr" dir="ltr">{progress.toFixed(8)}%</span>
               </div>
-              <div className="w-full h-3 bg-muted rounded-full overflow-hidden border border-border/30 relative">
+              <div className="w-full h-3 bg-muted rounded-full overflow-hidden border border-border/30 relative" dir="ltr">
                 <motion.div
                   className="h-full bg-gradient-to-r from-primary/80 to-primary rounded-full relative"
                   style={{ width: `${progress}%` }}
@@ -145,19 +149,19 @@ const Index = () => {
                 />
               </div>
               <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
-                <span>Start (Sept 2024)</span>
-                <span>Graduation (June 2027)</span>
+                <span>{t("edu_start")}</span>
+                <span>{t("edu_end")}</span>
               </div>
             </div>
             
             <p className="text-xs text-muted-foreground mt-2 border-t border-border/40 pt-3">
-              I am currently pursuing my Licence in Informatique de Gestion. The progress bar actively counts up in real-time.
+              {t("edu_desc")}
             </p>
           </div>
         </Section>
 
         {/* Projects Section */}
-        <Section ref={projectsRef} id="projects" title="Projects">
+        <Section ref={projectsRef} id="projects" title={t("projects_title")}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project, idx) => (
               <motion.div
@@ -192,8 +196,8 @@ const Index = () => {
                   </div>
                   {project.link && (
                     <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 px-3 py-1.5 rounded-lg transition-colors w-full sm:w-auto mt-auto border border-primary/20">
-                      {project.linkLabel || "View Project"}
-                      <ExternalLink className="h-3.5 w-3.5" />
+                      {project.linkLabel || t("btn_view")}
+                      <ExternalLink className="h-3.5 w-3.5 rtl:rotate-180" />
                     </a>
                   )}
                 </div>
@@ -203,7 +207,7 @@ const Index = () => {
         </Section>
 
         {/* Me Section */}
-        <Section ref={meRef} id="me" title="Me">
+        <Section ref={meRef} id="me" title={t("me_title")}>
           <div className="flex flex-col items-center gap-6">
             <ProfileAvatar src={profilePhoto} alt="Yassin Ezzedine" />
             
@@ -214,9 +218,9 @@ const Index = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-center"
             >
-              <h3 className="text-xl font-semibold text-foreground">Yassin Ezzedine</h3>
+              <h3 className="text-xl font-semibold text-foreground">Yassine EZZEDINE</h3>
               <p className="text-sm text-muted-foreground mt-1">
-                Business Information Systems Student · Full-Stack Developer
+                {t("me_subtitle")}
               </p>
             </motion.div>
 
@@ -226,7 +230,7 @@ const Index = () => {
                 icon={Mail}
                 variant="secondary"
               >
-                Email Me
+                {t("btn_email")}
               </ActionButton>
               
               <ActionButton
@@ -235,40 +239,34 @@ const Index = () => {
                 variant="primary"
                 download="Yassin_Ezzedine_CV.pdf"
               >
-                Download CV
+                {t("btn_download_cv")}
               </ActionButton>
             </div>
           </div>
         </Section>
 
-        {/* Connect with Me Section */}
-        <Section ref={connectRef} id="connect" title="Connect with Me">
-          <div className="flex flex-col gap-3 max-w-sm mx-auto">
-            {socialLinks.map((link, index) => (
-              <SocialLink
+        {/* Connect Section */}
+        <Section ref={connectRef} id="connect" title={t("connect_title")}>
+          <div className="flex justify-center gap-4">
+            {socialLinks.map((link) => (
+              <a
                 key={link.label}
                 href={link.href}
-                icon={link.icon}
-                label={link.label}
-                delay={0.1 + index * 0.1}
-              />
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-secondary text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300 transform hover:scale-110"
+                aria-label={link.label}
+              >
+                <link.icon className="w-5 h-5" />
+              </a>
             ))}
           </div>
         </Section>
-
-        {/* Footer */}
-        <motion.footer
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center py-8"
-        >
-          <p className="text-xs text-muted-foreground">
-            © Yassin Ezzedine
-          </p>
-        </motion.footer>
       </main>
+
+      <footer className="py-6 text-center text-sm text-muted-foreground border-t border-border mt-12">
+        <p>{t("footer_text")}</p>
+      </footer>
     </div>
   );
 };
