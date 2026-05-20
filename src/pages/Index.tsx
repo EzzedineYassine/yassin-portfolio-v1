@@ -1,6 +1,6 @@
 import { useRef, useCallback, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FileText, Mail, GraduationCap, ShoppingBag, Brain, Database } from "lucide-react";
+import { FileText, Mail, GraduationCap, ShoppingBag, Brain, Database, ExternalLink } from "lucide-react";
 import Header from "@/components/Header";
 import Section from "@/components/Section";
 import ProfileAvatar from "@/components/ProfileAvatar";
@@ -54,6 +54,8 @@ const Index = () => {
       description: "Designed a comprehensive e-commerce website using React and Vite. Implemented a centralized state architecture (Context API), a secure admin dashboard with CRUD functionalities, and persistent storage via Supabase and localStorage. Deployed continuously on Vercel.",
       tags: ["React", "Vite", "Context API", "Supabase", "Tailwind CSS", "Vercel"],
       icon: ShoppingBag,
+      link: "https://phantom-stickers.vercel.app", // Replace with actual link
+      linkLabel: "Visit Website",
     },
     {
       title: "Movie Recommendation System",
@@ -180,7 +182,7 @@ const Index = () => {
                     {project.description}
                   </p>
                 </div>
-                <div className="mt-6">
+                <div className="mt-6 flex-1 flex flex-col justify-end">
                   <div className="flex flex-wrap gap-1.5 mb-4">
                     {project.tags.map(tag => (
                       <span key={tag} className="text-[10px] bg-muted text-muted-foreground px-2 py-0.5 rounded-md font-mono">
@@ -188,6 +190,12 @@ const Index = () => {
                       </span>
                     ))}
                   </div>
+                  {project.link && (
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 px-3 py-1.5 rounded-lg transition-colors w-full sm:w-auto mt-auto border border-primary/20">
+                      {project.linkLabel || "View Project"}
+                      <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  )}
                 </div>
               </motion.div>
             ))}
